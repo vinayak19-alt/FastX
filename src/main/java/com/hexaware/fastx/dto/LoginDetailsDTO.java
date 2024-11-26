@@ -5,11 +5,13 @@ import com.hexaware.fastx.model.LoginDetails.Role;
 public class LoginDetailsDTO {
 
 	private String username;
+	private String password;
 	private Role role;
 	
-	public LoginDetailsDTO(String username, Role role) {
+	public LoginDetailsDTO(String username, String password, Role role) {
 		super();
 		this.username = username;
+		this.password = password;
 		this.role = role;
 	}
 
@@ -34,11 +36,17 @@ public class LoginDetailsDTO {
 		this.role = role;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
-		return "LoginDetailsDTO [username=" + username + ", role=" + role + "]";
+		return "LoginDetailsDTO [username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
-	
-	
 	
 }

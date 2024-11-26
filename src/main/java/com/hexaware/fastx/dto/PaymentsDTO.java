@@ -8,6 +8,7 @@ import com.hexaware.fastx.model.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
 
 public class PaymentsDTO {
 
@@ -19,6 +20,7 @@ public class PaymentsDTO {
 	
 	private Long transactionReportId;
 	private Date paymentDate;
+	@Min(value = 0, message = "Payment amount must not be 0 or less than 0")
 	private int amount;
 	private String paymentStatus;
 

@@ -7,6 +7,7 @@ import com.hexaware.fastx.model.Payments;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
 
 public class RefundDTO {
 
@@ -15,6 +16,7 @@ public class RefundDTO {
 	
 	private Long bookingId;
 	private Date refundDate;
+	@Min(value = 1, message = "The refund amount must not be less than 1")
 	private int refundAmount;
 	private String refundStatus;
 

@@ -1,10 +1,13 @@
 package com.hexaware.fastx.serviceimpl;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,8 @@ public class AdminService implements IAdminService{
 	private LoginDetailsRepository loginDetailsRepository;
 	private UserRepository userRepository;
 	
+	Logger logger = LoggerFactory.getLogger(AdminService.class);
+	
 	@Autowired
 	private ModelMapper mapper;
 	
@@ -44,6 +49,7 @@ public class AdminService implements IAdminService{
 		// TODO Auto-generated method stub
 		LoginDetails loginDetails = this.loginDetailsRepository.findByUsername(admin.getUsername());
 		if(loginDetails == null) {
+			logger.error("Admin details are not there in login details");
 			throw new EntityNotFoundException("Admin", "Login Details");
 		}
 		admin.setLoginDetails(loginDetails);
@@ -55,7 +61,9 @@ public class AdminService implements IAdminService{
 	public List<UserDTO> getAllUsers() {
 		List<UserDTO> usersDTO = new ArrayList<>();
 		List<User> users = userRepository.findAll();
+		logger.info("Getting all users");
 		if(users.size() == 0) {
+			logger.error("No users are there in the database");
 			throw new EntityNotFoundException("Users not found in ", "System");
 		}
 		users.forEach((u) -> {

@@ -14,7 +14,7 @@ import com.hexaware.fastx.model.LoginDetails;
 import com.hexaware.fastx.serviceimpl.LoginDetailsServiceImpl;
 
 @RestController
-@RequestMapping("/registerapi/v1/")
+@RequestMapping("/api/registerapi/v1/")
 public class LoginDetailsController {
 
 	private LoginDetailsServiceImpl loginDetailsServiceImpl;

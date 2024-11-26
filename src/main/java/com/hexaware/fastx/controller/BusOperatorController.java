@@ -27,7 +27,7 @@ import com.hexaware.fastx.serviceimpl.BusServiceImpl;
 import com.hexaware.fastx.serviceimpl.RouteServiceImpl;
 
 @RestController
-@RequestMapping("/busoperator/v1")
+@RequestMapping("/api/busoperator/v1")
 public class BusOperatorController {
 
 	private BusOperatorServiceImpl busOperatorServiceImpl;
@@ -43,11 +43,6 @@ public class BusOperatorController {
 		this.busOperatorServiceImpl = busOperatorServiceImpl;
 		this.busServiceImpl = busServiceImpl;
 		this.routeServiceImpl = routeServiceImpl;
-	}
-	
-	@PostMapping("/addBusOperator")
-	public ResponseEntity<BusOperatorDTO> addBusOperator(@RequestBody BusOperator busOperator){
-		return ResponseEntity.ok(this.busOperatorServiceImpl.addBusOperator(busOperator));
 	}
 	
 	@PostMapping("/addBus")

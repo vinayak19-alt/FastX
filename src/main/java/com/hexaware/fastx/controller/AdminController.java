@@ -23,7 +23,7 @@ import com.hexaware.fastx.serviceimpl.RouteServiceImpl;
 import com.hexaware.fastx.serviceimpl.UserServiceImpl;
 
 @RestController
-@RequestMapping("/admin/v1/")
+@RequestMapping("/api/admin/v1/")
 public class AdminController {
 
 	private AdminService adminService;
@@ -39,11 +39,6 @@ public class AdminController {
 		this.routeServiceImpl = routeServiceImpl;
 		this.userServiceImpl = userServiceImpl;
 		this.busOperatorServiceImpl=busOperatorServiceImpl;
-	}
-	
-	@PostMapping("/addAdmin")
-	public ResponseEntity<AdminDTO> addAdmin(@RequestBody Admin admin){
-		return ResponseEntity.ok(this.adminService.addAdmin(admin));
 	}
 	
 	@GetMapping("/getAllUsers")

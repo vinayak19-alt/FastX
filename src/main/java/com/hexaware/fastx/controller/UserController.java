@@ -27,7 +27,7 @@ import com.hexaware.fastx.serviceimpl.TransactionReportServiceImpl;
 import com.hexaware.fastx.serviceimpl.UserServiceImpl;
 
 @RestController
-@RequestMapping("/saveuser/v1/")
+@RequestMapping("/api/saveuser/v1/")
 public class UserController {
 
 	private UserServiceImpl userServiceImpl;
@@ -45,11 +45,6 @@ public class UserController {
 		this.refundServiceImpl = refundServiceImpl;
 		this.routeServiceImpl = routeServiceImpl;
 		this.transactionReportServiceImpl = transactionReportServiceImpl;
-	}
-	
-	@PostMapping("/adduser")
-	public ResponseEntity<UserDTO> addUser(@RequestBody User user){
-		return ResponseEntity.ok(this.userServiceImpl.addUser(user));
 	}
 	
 	@PostMapping("/makeReservation")

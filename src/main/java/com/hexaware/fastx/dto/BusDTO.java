@@ -11,12 +11,17 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 public class BusDTO {
 
 	private Long busId;
+	@NotEmpty(message = "The bus number must not be empty")
 	private String busNumber;
+	@NotEmpty(message = "Please enter bus type")
 	private String busType;
+	@Min(value = 10, message = "Please enter valid number of seats(more than 10)")
 	private int seats;
 	
 	private List<Long> routeIds;

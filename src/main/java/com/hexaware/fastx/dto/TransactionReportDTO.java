@@ -11,6 +11,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 public class TransactionReportDTO {
 
@@ -18,7 +20,9 @@ public class TransactionReportDTO {
 
 	private Date reportDate;
 
+	@NotEmpty(message = "username must not be empty")
 	private String username;
+	@Min(value = 1, message = "Please book atleast 1 ticket to move further")
 	private int ticketsBooked;
 	private String busNumber;
 	private int amount;

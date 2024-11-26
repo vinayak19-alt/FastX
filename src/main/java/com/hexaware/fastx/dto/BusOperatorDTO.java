@@ -1,32 +1,39 @@
 package com.hexaware.fastx.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+
 public class BusOperatorDTO {
 
+	@NotEmpty(message = "Operator name must not be empty")
 	private String operatorName;
+	@Min(value = 22, message = "Operator age must be greater than 22")
+	@Max(value = 50, message = "Operator age must be less than 50")
 	private int age;
+	@NotEmpty(message = "Username must not be empty")
 	private String username;
+	@NotEmpty(message = "Phone number must not be empty")
 	private String phone;
-	private Long busId;
 
 	public BusOperatorDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public BusOperatorDTO(String operatorName, int age, String username, String phone, Long busId) {
+	public BusOperatorDTO(String operatorName, int age, String username, String phone) {
 		super();
 		this.operatorName = operatorName;
 		this.age = age;
-		this.username=username;
+		this.username = username;
 		this.phone = phone;
-		this.busId = busId;
 	}
 
-	public String getName() {
+	public String getOperatorName() {
 		return operatorName;
 	}
 
-	public void setName(String operatorName) {
+	public void setOperatorName(String operatorName) {
 		this.operatorName = operatorName;
 	}
 
@@ -45,15 +52,6 @@ public class BusOperatorDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
-
-	public Long getBusId() {
-		return busId;
-	}
-
-	public void setBusId(Long busId) {
-		this.busId = busId;
-	}
 
 	public String getUsername() {
 		return username;
@@ -65,10 +63,8 @@ public class BusOperatorDTO {
 
 	@Override
 	public String toString() {
-		return "BusOperatorDTO [name=" + operatorName + ", age=" + age + ", username=" + username + ", phone=" + phone
-				+ ", busId=" + busId + "]";
+		return "BusOperatorDTO [operatorName=" + operatorName + ", age=" + age + ", username=" + username + ", phone="
+				+ phone + "]";
 	}
-
-	
 
 }

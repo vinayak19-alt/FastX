@@ -1,6 +1,8 @@
 package com.hexaware.fastx.serviceimpl;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class BusOperatorServiceImpl implements IBusOperatorService{
 	private BusOperatorRepository busOperatorRepository;
 	private LoginDetailsRepository loginDetailsRepository;
 	
+	Logger logger = LoggerFactory.getLogger(BusOperatorServiceImpl.class);
+	
 	@Autowired
 	private ModelMapper mapper;
 	
@@ -36,6 +40,7 @@ public class BusOperatorServiceImpl implements IBusOperatorService{
 		// TODO Auto-generated method stub
 		LoginDetails loginDetails = this.loginDetailsRepository.findByUsername(busOperator.getUsername());
 		if(loginDetails == null) {
+			logger.error("Bus operator might not exist");
 			throw new EntityNotFoundException("Bus Operator", "Login Details");
 		}
 		busOperator.setLoginDetails(loginDetails);

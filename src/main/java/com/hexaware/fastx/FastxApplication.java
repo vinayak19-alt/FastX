@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 public class FastxApplication {
 
+	//Logger logger=LoggerFactory.getLogger(class_name);
 	public static void main(String[] args) {
 		SpringApplication.run(FastxApplication.class, args);
 	}
