@@ -115,10 +115,6 @@ public class AuthServiceImpl implements IAuthService{
 			logger.error("Username already exists");
 			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Username already exists in Operator");
 		}
-		
-		// Check if email already exists in User repository (only for user registration)
-	    if (dto.getRole().toString().equalsIgnoreCase("user") && userRepository.existsByEmail(dto.getEmail()))
-	        throw new BadRequestException(HttpStatus.BAD_REQUEST, "Email already exists in User");
 
 	    // Create LoginDetails object
 	    LoginDetails loginDetails = new LoginDetails(dto.getUsername(), passwordEncoder.encode(dto.getPassword()), dto.getRole());

@@ -10,13 +10,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class RegisterDTO {
-	private String name;
 	@NotEmpty(message = "username must not be empty")
 	private String username;
 	@NotEmpty(message = "Password must not be empty")
 	@Size(min = 8, max = 12, message = "Password between 8 and 12 in length")
 	private String password;
-	private String email;
 	@NotNull
 	private LoginDetails.Role role;
 
@@ -25,21 +23,11 @@ public class RegisterDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RegisterDTO(String name, String username, String password, String email, LoginDetails.Role role) {
+	public RegisterDTO(String username, String password, LoginDetails.Role role) {
 		super();
-		this.name = name;
 		this.username = username;
 		this.password = password;
-		this.email = email;
 		this.role = role;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getUsername() {
@@ -58,14 +46,6 @@ public class RegisterDTO {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public LoginDetails.Role getRole() {
 		return role;
 	}
@@ -76,8 +56,9 @@ public class RegisterDTO {
 
 	@Override
 	public String toString() {
-		return "ResgisterDTO [name=" + name + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", role=" + role + "]";
+		return "RegisterDTO [username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
+
+	
 
 }

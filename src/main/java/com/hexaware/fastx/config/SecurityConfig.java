@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.hexaware.fastx.security.JwtAuthenticationEntryPoint;
 import com.hexaware.fastx.security.JwtAuthenticationFilter;
@@ -42,7 +44,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
 	{
-		httpSecurity.csrf().disable()
+		httpSecurity.cors().and().csrf().disable()
 			.authorizeHttpRequests((authorize) -> 
 			//authorize.anyRequest().authenticated()
 	  		authorize.requestMatchers( "/api/authenticate/**").permitAll()
@@ -55,4 +57,18 @@ public class SecurityConfig {
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return httpSecurity.build();
 	}
+	
+	@Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                    .allowedOrigins("http://localhost:3000")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                    .allowedHeaders("*")
+                    .maxAge(3600);
+            }
+        };
+    }
 }
