@@ -3,6 +3,7 @@ package com.hexaware.fastx.serviceimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.core.appender.routing.Routes;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,20 @@ public class RouteServiceImpl implements IRouteService{
 			throw new BadRequestMadeException("No routes are available for selected date, source or destination");
 		}
 		routes.forEach((r) -> {
+			routeDTOs.add(mapper.map(r, RouteDTO.class));
+		});
+		return routeDTOs;
+	}
+
+	@Override
+	public List<RouteDTO> getEveryRoute() {
+		// TODO Auto-generated method stub
+		List<RouteDTO> routeDTOs = new ArrayList<>();
+		List<Route> routes = this.routeRepository.findAll();
+		if(routes.size()==0) {
+			throw new BadRequestMadeException("No routes are available in the system");
+		}
+		routes.forEach((r)->{
 			routeDTOs.add(mapper.map(r, RouteDTO.class));
 		});
 		return routeDTOs;

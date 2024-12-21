@@ -20,6 +20,7 @@ public class RouteDTO {
 	private Long busId;
 	private String busNumber;
 	private String busType;
+	private int seats;
 	
 	private List<Long> bookingIds;
 
@@ -29,7 +30,7 @@ public class RouteDTO {
 	}
 
 	public RouteDTO(Long routeId, String source, String destination, String departDate, String departTime, String arrTime, int price,
-			Long busId, List<Long> bookingIds, String busNumber, String busType) {
+			Long busId, List<Long> bookingIds, String busNumber, String busType, int seats) {
 		super();
 		this.routeId = routeId;
 		this.source = source;
@@ -40,7 +41,9 @@ public class RouteDTO {
 		this.price = price;
 		this.busId = busId;
 		this.bookingIds = bookingIds;
-		this.busNumber= this.busType;
+		this.busNumber= busNumber;
+		this.busType = busType;
+		this.seats=seats;
 	}
 
 	public Long getRouteId() {
@@ -133,12 +136,21 @@ public class RouteDTO {
 		this.busType = busType;
 	}
 
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
 	@Override
 	public String toString() {
 		return "RouteDTO [routeId=" + routeId + ", source=" + source + ", destination=" + destination + ", departDate="
 				+ departDate + ", departTime=" + departTime + ", arrTime=" + arrTime + ", price=" + price + ", busId="
-				+ busId + ", busNumber=" + busNumber + ", busType=" + busType + ", bookingIds=" + bookingIds + "]";
+				+ busId + ", busNumber=" + busNumber + ", busType=" + busType + ", seats=" + seats + ", bookingIds="
+				+ bookingIds + "]";
 	}
-
+	
 	
 }

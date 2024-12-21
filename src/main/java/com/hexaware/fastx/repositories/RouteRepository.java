@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.hexaware.fastx.model.Bus;
 import com.hexaware.fastx.model.Route;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {

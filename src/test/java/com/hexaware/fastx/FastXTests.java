@@ -88,7 +88,7 @@ public class FastXTests {
 	@Test
 	void e_addRouteTest() {
 		Bus bus = this.busRepository.findByBusNumber("BusTest");
-		Route route = new Route("source1", "destination1", "01-01-2001", "12:00", "15:00", 100);
+		Route route = new Route("source1", "destination1", "01-01-2001", "12:00", "15:00", 100, 40);
 		route.setBus(bus);
 		this.routeRepository.save(route);
 	}

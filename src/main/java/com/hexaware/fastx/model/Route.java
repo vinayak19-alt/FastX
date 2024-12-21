@@ -46,6 +46,9 @@ public class Route {
 	@JoinColumn(name = "bus_id")
 	private Bus bus;
 	
+	@Column(name = "seats")
+	private int seats;
+	
 	@OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
 	private List<Bookings> booking;
 
@@ -54,7 +57,7 @@ public class Route {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Route(String source, String destination, String departDate, String departTime, String arrTime, int price) {
+	public Route(String source, String destination, String departDate, String departTime, String arrTime, int price, int seats) {
 		super();
 		this.source = source;
 		this.destination = destination;
@@ -62,6 +65,7 @@ public class Route {
 		this.departTime = departTime;
 		this.arrTime = arrTime;
 		this.price = price;
+		this.seats=seats;
 	}
 
 	public Long getId() {
@@ -136,15 +140,20 @@ public class Route {
 		this.departDate = departDate;
 	}
 
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
 	@Override
 	public String toString() {
 		return "Route [id=" + id + ", source=" + source + ", destination=" + destination + ", departDate=" + departDate
 				+ ", departTime=" + departTime + ", arrTime=" + arrTime + ", price=" + price + ", bus=" + bus
-				+ ", booking=" + booking + "]";
+				+ ", seats=" + seats + ", booking=" + booking + "]";
 	}
 
 	
-	
-	
-
 }

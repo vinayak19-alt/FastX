@@ -1,16 +1,8 @@
 package com.hexaware.fastx.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.hexaware.fastx.model.Bookings;
-import com.hexaware.fastx.model.BusOperator;
-import com.hexaware.fastx.model.Route;
-import com.hexaware.fastx.model.TransactionReport;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -48,7 +40,10 @@ public class BusDTO {
 		this.busOperatorId = busOperatorId;
 		this.bookingIds = bookingIds;
 		this.reportIds = reportIds;
+		
 	}
+
+	
 
 	public Long getBusId() {
 		return busId;

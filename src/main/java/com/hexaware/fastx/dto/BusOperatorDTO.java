@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class BusOperatorDTO {
 
+	private Long operatorId;
 	@NotEmpty(message = "Operator name must not be empty")
 	private String operatorName;
 	@Min(value = 22, message = "Operator age must be greater than 22")
@@ -21,8 +22,9 @@ public class BusOperatorDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BusOperatorDTO(String operatorName, int age, String username, String phone) {
+	public BusOperatorDTO(Long operatorId, String operatorName, int age, String username, String phone) {
 		super();
+		this.operatorId=operatorId;
 		this.operatorName = operatorName;
 		this.age = age;
 		this.username = username;
@@ -60,11 +62,22 @@ public class BusOperatorDTO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+
+	public Long getOperatorId() {
+		return operatorId;
+	}
+
+	public void setOperatorId(Long operatorId) {
+		this.operatorId = operatorId;
+	}
 
 	@Override
 	public String toString() {
-		return "BusOperatorDTO [operatorName=" + operatorName + ", age=" + age + ", username=" + username + ", phone="
-				+ phone + "]";
+		return "BusOperatorDTO [operatorId=" + operatorId + ", operatorName=" + operatorName + ", age=" + age
+				+ ", username=" + username + ", phone=" + phone + "]";
 	}
+
+	
 
 }

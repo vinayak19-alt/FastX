@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hexaware.fastx.dto.BookingsDTO;
 import com.hexaware.fastx.dto.BusDTO;
 import com.hexaware.fastx.dto.BusOperatorDTO;
 import com.hexaware.fastx.dto.RouteDTO;
 import com.hexaware.fastx.model.Bus;
 import com.hexaware.fastx.model.BusOperator;
 import com.hexaware.fastx.model.Route;
+import com.hexaware.fastx.serviceimpl.BookingService;
 import com.hexaware.fastx.serviceimpl.BusOperatorServiceImpl;
 import com.hexaware.fastx.serviceimpl.BusServiceImpl;
 import com.hexaware.fastx.serviceimpl.RouteServiceImpl;
@@ -35,16 +37,18 @@ public class BusOperatorController {
 	private BusOperatorServiceImpl busOperatorServiceImpl;
 	private BusServiceImpl busServiceImpl;
 	private RouteServiceImpl routeServiceImpl;
+	private BookingService bookingService;
 	
 	@Autowired
 	private ModelMapper mapper;
 
 	@Autowired
-	public BusOperatorController(BusOperatorServiceImpl busOperatorServiceImpl, BusServiceImpl busServiceImpl, RouteServiceImpl routeServiceImpl) {
+	public BusOperatorController(BusOperatorServiceImpl busOperatorServiceImpl, BusServiceImpl busServiceImpl, RouteServiceImpl routeServiceImpl, BookingService bookingService) {
 		super();
 		this.busOperatorServiceImpl = busOperatorServiceImpl;
 		this.busServiceImpl = busServiceImpl;
 		this.routeServiceImpl = routeServiceImpl;
+		this.bookingService=bookingService;
 	}
 	
 	@PostMapping("/addBus")
@@ -74,4 +78,24 @@ public class BusOperatorController {
 														@PathVariable("destination") String destination){
 		return ResponseEntity.ok(this.routeServiceImpl.getAllRoutes(departDate, source, destination));
 	}
+	
+	@GetMapping("/allRoutes")
+	public ResponseEntity<List<RouteDTO>> getEveryRoute(){
+		return ResponseEntity.ok(this.routeServiceImpl.getEveryRoute());
+	}
+	
+	@GetMapping("/busForOperator/{username}")
+	public ResponseEntity<List<BusDTO>> getBusForOperator(@PathVariable("username") String username){
+		return ResponseEntity.ok(this.busServiceImpl.getBusForOperator(username));
+	}
+	@GetMapping("/getBookingsForBus/{id}")
+	public ResponseEntity<List<BookingsDTO>> getBookingsForBus(@PathVariable("id") Long id){
+		return ResponseEntity.ok(this.bookingService.getBookingsForBus(id));
+	}
+	@PostMapping("/cancelBookingByOperator/{id}")
+	public ResponseEntity<String> cancelReservation(@PathVariable Long id){
+		this.bookingService.cancelReservation(id);
+		return ResponseEntity.ok("Booking cancelled Successfully");
+	}
+	
 }

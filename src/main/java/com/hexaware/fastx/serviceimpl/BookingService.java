@@ -10,18 +10,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hexaware.fastx.customexceptions.BadRequestMadeException;
 import com.hexaware.fastx.customexceptions.EntityNotFoundException;
 import com.hexaware.fastx.customexceptions.ResourceNotAvailableException;
 import com.hexaware.fastx.dto.BookingsDTO;
+import com.hexaware.fastx.dto.RefundDTO;
 import com.hexaware.fastx.dto.TransactionReportDTO;
 import com.hexaware.fastx.model.Bookings;
 import com.hexaware.fastx.model.Bus;
 import com.hexaware.fastx.model.Payments;
+import com.hexaware.fastx.model.Refund;
+import com.hexaware.fastx.model.Route;
 import com.hexaware.fastx.model.TransactionReport;
 import com.hexaware.fastx.model.User;
 import com.hexaware.fastx.repositories.BookingRepository;
 import com.hexaware.fastx.repositories.BusRepository;
 import com.hexaware.fastx.repositories.PaymentsRepository;
+import com.hexaware.fastx.repositories.RefundRepository;
 import com.hexaware.fastx.repositories.RouteRepository;
 import com.hexaware.fastx.repositories.TransactionReportRepository;
 import com.hexaware.fastx.repositories.UserRepository;
@@ -40,12 +45,13 @@ public class BookingService implements IBookingService {
 	private PaymentsRepository paymentsRepository;
 	private RouteRepository routeRepository;
 	private TransactionReportRepository transactionReportRepository;
+	private RefundRepository refundRepository;
 	
 	
 	@Autowired
 	public BookingService(BookingRepository bookingRepository, UserRepository userRepository,
 			BusRepository busRepository, PaymentsRepository paymentsRepository, RouteRepository routeRepository,
-			TransactionReportRepository transactionReportRepository) {
+			TransactionReportRepository transactionReportRepository, RefundRepository refundRepository) {
 		super();
 		this.bookingRepository = bookingRepository;
 		this.userRepository = userRepository;
@@ -53,6 +59,7 @@ public class BookingService implements IBookingService {
 		this.paymentsRepository = paymentsRepository;
 		this.routeRepository = routeRepository;
 		this.transactionReportRepository=transactionReportRepository;
+		this.refundRepository=refundRepository;
 	}
 	
 	@Autowired
@@ -73,6 +80,7 @@ public class BookingService implements IBookingService {
 		if(bus.getSeats() < booking.getTicketsBooked()) {
 			throw new ResourceNotAvailableException("The number of seats you are trying to book are not available");
 		}
+		
 		booking.setUser(user);
 		booking.setBus(bus);
 		booking.setRoute(bus.getRoute().get(0));
@@ -82,6 +90,9 @@ public class BookingService implements IBookingService {
 		Bookings savedBooking = this.bookingRepository.save(booking);
 		bus.setSeats(bus.getSeats()-booking.getTicketsBooked());
 		this.busRepository.save(bus);
+		
+		Route route = bus.getRoute().get(0);
+		route.setSeats(bus.getSeats());
 		
 		Payments payment = new Payments();
 	    payment.setBooking(savedBooking);
@@ -118,6 +129,43 @@ public class BookingService implements IBookingService {
 		
 		return bookingDTOs;
 	}
+
+	@Override
+	public String cancelReservation(Long id) {
+		// TODO Auto-generated method stub
+		Bookings booking = this.bookingRepository.findByBookingId(id);
+		if(booking ==  null) {
+			throw new BadRequestMadeException("Booking for which Refund is asked is not there");
+		}
+		Bus bus = booking.getBus();
+		Route route = booking.getRoute();
+		Refund refund = new Refund();
+		refund.setBooking(booking);
+		refund.setRefundAmount(booking.getAmount());
+		refund.setRefundDate(new Date());
+		refund.setRefundStatus("Successful");
+		Refund savedRefund = this.refundRepository.save(refund);
+		booking.setStatus("Cancelled");
+		bookingRepository.save(booking);
+		bus.setSeats(bus.getSeats()+booking.getTicketsBooked());
+		Bus savedBus = this.busRepository.save(bus);
+		route.setSeats(savedBus.getSeats());
+		RefundDTO savedRefundDTO = mapper.map(savedRefund, RefundDTO.class);
+		return "Booking Cancelled";
+	}
+
+	@Override
+	public List<BookingsDTO> getBookingsForBus(Long id) {
+		// TODO Auto-generated method stub
+		List<Bookings> bookings = this.bookingRepository.getBookingsForBus(id);
+		List<BookingsDTO> bookingsDTOs = new ArrayList<>();
+		bookings.forEach((b)->{
+			bookingsDTOs.add(mapper.map(b, BookingsDTO.class));
+		});
+		return bookingsDTOs;
+	}
+
+	
 
 
 }

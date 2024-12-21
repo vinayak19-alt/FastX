@@ -1,10 +1,5 @@
 package com.hexaware.fastx.serviceimpl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.catalina.mapper.Mapper;
-import org.hibernate.action.internal.EntityActionVetoException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.fastx.customexceptions.EntityNotFoundException;
-import com.hexaware.fastx.dto.BookingsDTO;
-import com.hexaware.fastx.dto.LoginDetailsDTO;
 import com.hexaware.fastx.dto.UserDTO;
-import com.hexaware.fastx.model.Bookings;
-import com.hexaware.fastx.model.Bus;
 import com.hexaware.fastx.model.LoginDetails;
-import com.hexaware.fastx.model.Payments;
 import com.hexaware.fastx.model.User;
-import com.hexaware.fastx.repositories.BookingRepository;
-import com.hexaware.fastx.repositories.BusRepository;
 import com.hexaware.fastx.repositories.LoginDetailsRepository;
-import com.hexaware.fastx.repositories.PaymentsRepository;
 import com.hexaware.fastx.repositories.UserRepository;
 import com.hexaware.fastx.service.IUserService;
 
@@ -71,6 +58,15 @@ public class UserServiceImpl implements IUserService{
 		logger.info("Loooking for userID: " + userId);
 		this.userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User", "System"));
 		this.userRepository.deleteById(userId);
+	}
+
+
+	@Override
+	public UserDTO getUserById(Long userId) {
+		// TODO Auto-generated method stub
+		User user = this.userRepository.findById(userId).get();
+		UserDTO dto = mapper.map(user, UserDTO.class);
+		return dto;
 	}
 
 }

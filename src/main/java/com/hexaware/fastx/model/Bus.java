@@ -1,9 +1,7 @@
 package com.hexaware.fastx.model;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.annotations.ManyToAny;
-import org.w3c.dom.ls.LSException;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,7 +45,7 @@ public class Bus {
 	
 	@OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
 	private List<TransactionReport> reports;
-
+	
 	public Bus() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -67,6 +65,8 @@ public class Bus {
 	public void setBusId(Long busId) {
 		this.busId = busId;
 	}
+
+
 
 	public String getBusNumber() {
 		return busNumber;

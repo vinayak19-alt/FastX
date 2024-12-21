@@ -10,5 +10,7 @@ public interface IBookingService {
 	
 	public BookingsDTO makeReservation(Bookings booking);
 	List<BookingsDTO> getBookingsForUser(String username);
+	public String cancelReservation(Long id);
+	public List<BookingsDTO> getBookingsForBus(Long id);
 
 }

@@ -9,4 +9,5 @@ public interface IRouteService {
 	
 	public RouteDTO addRoute(Route route, String busNumber) throws Exception;
 	public List<RouteDTO> getAllRoutes(String departDate, String source, String destination);
+	public List<RouteDTO> getEveryRoute();
 }

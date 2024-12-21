@@ -9,5 +9,7 @@ public interface IBusService {
 	
 	public BusDTO addBus(Bus bus, String username) throws Exception;
 	
-
+//	public List<Object[]> getBookingsByOperatorId(Long operatorId);
+	
+	public List<BusDTO> getBusForOperator(String username);
 }

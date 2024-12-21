@@ -1,11 +1,11 @@
 package com.hexaware.fastx.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.hexaware.fastx.customexceptions.EntityNotFoundException;
 import com.hexaware.fastx.customexceptions.ResourceNotAvailableException;
@@ -51,6 +51,25 @@ public class BusServiceImpl implements IBusService{
 		BusDTO savedBusDTO = mapper.map(savedBus, BusDTO.class);
 		return savedBusDTO;
 	}
+
+	@Override
+	public List<BusDTO> getBusForOperator(String username) {
+		// TODO Auto-generated method stub
+		BusOperator operator = this.busOperatorRepository.findByUsername(username);
+		Long id = operator.getOperatorId();
+		List<Bus> busList = this.busRepository.findByOperatorId(id);
+		List<BusDTO> busDTOList = new ArrayList<>();
+		busList.forEach((b)->{
+			busDTOList.add(mapper.map(b, BusDTO.class));
+		});
+		return busDTOList;
+	}
+	
+//	@Override
+//	public List<Object[]> getBookingsByOperatorId(Long operatorId) {
+//		// TODO Auto-generated method stub
+//		return this.busRepository.findBookingsByOperatorId(operatorId);
+//	}
 
 
 }

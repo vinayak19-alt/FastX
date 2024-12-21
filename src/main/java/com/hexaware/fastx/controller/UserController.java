@@ -60,9 +60,10 @@ public class UserController {
 		return ResponseEntity.ok(this.bookingService.getBookingsForUser(username));
 	}
 	
-	@PostMapping("/cancelReservation")
-	public ResponseEntity<RefundDTO> cancelReservation(@RequestBody Refund refund){
-		return ResponseEntity.ok(this.refundServiceImpl.refundAmount(refund));
+	@PostMapping("/cancelReservation/{id}")
+	public ResponseEntity<String> cancelReservation(@PathVariable Long id){
+		this.bookingService.cancelReservation(id);
+		return ResponseEntity.ok("Booking cancelled Successfully");
 	}
 	@GetMapping("/getRoutes/{departDate}/{source}/{destination}")
 	public ResponseEntity<List<RouteDTO>> getAllRoutes(@PathVariable("departDate") String departDate,
@@ -73,6 +74,10 @@ public class UserController {
 	@PostMapping("/addTransaction")
 	public ResponseEntity<TransactionReportDTO> makeReport(@RequestBody TransactionReport report){
 		return ResponseEntity.ok(this.transactionReportServiceImpl.makeReport(report));
+	}
+	@GetMapping("/getUserDetails/{userId}")
+	public ResponseEntity<UserDTO> getUserDetails(@PathVariable("userId")Long userId){
+		return ResponseEntity.ok(this.userServiceImpl.getUserById(userId));
 	}
 	
 }
