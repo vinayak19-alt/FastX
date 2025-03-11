@@ -46,12 +46,13 @@ public class BookingService implements IBookingService {
 	private RouteRepository routeRepository;
 	private TransactionReportRepository transactionReportRepository;
 	private RefundRepository refundRepository;
+	private EmailServiceImpl emailServiceImpl;
 	
 	
 	@Autowired
 	public BookingService(BookingRepository bookingRepository, UserRepository userRepository,
 			BusRepository busRepository, PaymentsRepository paymentsRepository, RouteRepository routeRepository,
-			TransactionReportRepository transactionReportRepository, RefundRepository refundRepository) {
+			TransactionReportRepository transactionReportRepository, RefundRepository refundRepository, EmailServiceImpl emailServiceImpl) {
 		super();
 		this.bookingRepository = bookingRepository;
 		this.userRepository = userRepository;
@@ -60,6 +61,7 @@ public class BookingService implements IBookingService {
 		this.routeRepository = routeRepository;
 		this.transactionReportRepository=transactionReportRepository;
 		this.refundRepository=refundRepository;
+		this.emailServiceImpl = emailServiceImpl;
 	}
 	
 	@Autowired
@@ -111,6 +113,12 @@ public class BookingService implements IBookingService {
 	    TransactionReport savedReport =  this.transactionReportRepository.save(report);
 	    TransactionReportDTO savedReportDTO = mapper.map(savedReport, TransactionReportDTO.class);
 		BookingsDTO savedBookingDTO = mapper.map(savedBooking, BookingsDTO.class);
+		String message = "Dear " + booking.getUser().getName() + ",\n\n"
+                + "Your ticket for " + booking.getBusNumber() + " is successfully booked.\n"
+                + "Thank you for choosing our service!\n\n"
+                + "Best Regards,\n"
+                + "FastX Ticketing System";
+		emailServiceImpl.sendMail(booking.getUser().getEmail(), "Booking Successful", message);
 		return savedBookingDTO;
 	}
 
